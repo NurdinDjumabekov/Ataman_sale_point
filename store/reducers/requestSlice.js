@@ -215,8 +215,8 @@ export const getWorkShopsGorSale = createAsyncThunk(
       );
       if (response.status >= 200 && response.status < 300) {
         const { workshop_guid } = response?.data?.[0];
-        await dispatch(changeActiveSelectWorkShop(workshop_guid));
-        await dispatch(getCategoryTT({ ...props, workshop_guid }));
+        dispatch(changeActiveSelectWorkShop(workshop_guid));
+        dispatch(getCategoryTT({ ...props, workshop_guid }));
         return response.data;
       } else {
         throw Error(`Error: ${response.status}`);
@@ -248,11 +248,11 @@ export const getCategoryTT = createAsyncThunk(
         const category_guid = response.data?.[0]?.category_guid || "";
         dispatch(changeActiveSelectCategory(category_guid)); /// исользую в продаже и в остатках
 
-        if (type === "leftovers") {
+        if (type == "leftovers") {
           const obj = { seller_guid, category_guid, workshop_guid };
           await dispatch(getMyLeftovers(obj));
           //// для страницы остатков вызываю первую категорию
-        } else if (type === "sale") {
+        } else if (type == "sale") {
           ////// для продажи и с0путки
           const sedData = { guid: category_guid, seller_guid, location };
           await dispatch(getProductTT({ ...sedData, workshop_guid }));
@@ -349,8 +349,10 @@ export const getMyLeftovers = createAsyncThunk(
     const { seller_guid, category_guid, workshop_guid } = props;
 
     console.log(
-      `${API}/tt/get_report_leftovers?seller_guid=${seller_guid}&categ_guid=${category_guid}&workshop_guid=${workshop_guid}`
+      `${API}/tt/get_report_leftovers?seller_guid=${seller_guid}&categ_guid=${category_guid}&workshop_guid=${workshop_guid}`,
+      "getMyLeftovers"
     );
+
     try {
       const response = await axios({
         method: "GET",
@@ -1756,7 +1758,7 @@ const requestSlice = createSlice({
     ////// confirmSoputka
     builder.addCase(confirmSoputka.fulfilled, (state, action) => {
       state.preloader = false;
-      Alert.alert("Накладная сопутки успешно создана!");
+      Alert.alert("Ваша заявка успешно создана!");
     });
     builder.addCase(confirmSoputka.rejected, (state, action) => {
       state.error = action.payload;

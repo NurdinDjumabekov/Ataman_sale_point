@@ -1,3 +1,4 @@
+/////hooks
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -32,11 +33,9 @@ export const SoputkaProdHistoryScreen = ({ navigation, route }) => {
     navigation.setOptions({ title: `${listProdSoputka?.[0]?.date}` });
   }, [listProdSoputka?.[0]?.date]);
 
-  useEffect(() => getData(), []);
+  const getData = () => dispatch(getListSoputkaProd(guidInvoice));
 
-  const getData = () => {
-    dispatch(getListSoputkaProd(guidInvoice));
-  };
+  useEffect(() => getData(), []);
 
   const confirmBtn = () => {
     dispatch(confirmSoputka({ invoice_guid: guidInvoice, navigation }));
@@ -105,9 +104,9 @@ export const SoputkaProdHistoryScreen = ({ navigation, route }) => {
             }
           />
         </View>
-        <Text style={styles.totalItemSumm}>
+        {/* <Text style={styles.totalItemSumm}>
           Итого: {totals?.totalKg} кг и {totals?.totalSht} штук
-        </Text>
+        </Text> */}
         <Text style={styles.totalItemSumm}>
           Сумма: {sumSoputkaProds(listProdSoputka?.[0]?.list)} сом
         </Text>

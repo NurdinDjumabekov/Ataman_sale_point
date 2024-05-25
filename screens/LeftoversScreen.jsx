@@ -20,13 +20,20 @@ import { getLocalDataUser } from "../helpers/returnDataUser";
 /////// components
 import { ActionsEveryInvoice } from "../common/ActionsEveryInvoice";
 import { TablesLeftovers } from "./Tables/TablesLeftovers";
-import { View } from "react-native";
 
 export const LeftoversScreen = () => {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.saveDataSlice);
 
   const { listLeftovers } = useSelector((state) => state.requestSlice);
+
+  const getData = () => {
+    dispatch(clearLeftovers()); //// очищаю массив данных остатков
+
+    const sendData = { seller_guid: data?.seller_guid, type: "leftovers" };
+    // ////// внутри есть getCategoryTT и getProductTT
+    dispatch(getWorkShopsGorSale({ ...sendData, location: "Shipment" }));
+  };
 
   useEffect(() => {
     getData();
@@ -42,15 +49,6 @@ export const LeftoversScreen = () => {
       /// очищаю цеха, для сортировки товаров по категориям
     };
   }, []);
-
-  const getData = async () => {
-    await getLocalDataUser({ changeLocalData, dispatch });
-    dispatch(clearLeftovers()); //// очищаю массив данныз остатков
-
-    const sendData = { seller_guid: data?.seller_guid, type: "leftovers" };
-    // ////// внутри есть getCategoryTT и getProductTT
-    dispatch(getWorkShopsGorSale({ ...sendData, location: "Shipment" }));
-  };
 
   return (
     <SafeAreaView style={styles.container}>

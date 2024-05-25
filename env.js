@@ -1,1 +1,1 @@
-export const API = "http://riha-operator.333.kg/api";
+export const API = "http://ataman-operator.333.kg/api";

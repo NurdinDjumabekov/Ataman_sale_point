@@ -43,8 +43,6 @@ export const SoputkaProductScreen = ({ route, navigation }) => {
     ////// удаление продуктов сопутки
   };
 
-  // const { invoice_guid } = listProdSoputka?.[0];
-
   const confirmBtn = () => {
     dispatch(confirmSoputka({ invoice_guid: guidInvoice, navigation }));
     ///// подтверждение накладной сопутки
@@ -106,11 +104,11 @@ export const SoputkaProductScreen = ({ route, navigation }) => {
             }
           />
           <View style={styles.actionBlock}>
-            <Text style={styles.totalItemSumm}>
+            {/* <Text style={styles.totalItemSumm}>
               Итого: {totals?.totalKg} кг и {totals?.totalSht} штук
-              {/* {totals?.totalKg !== 0 && `Итого: ${totals?.totalKg} кг`}
-              {totals?.totalSht !== 0 && `и ${totals?.totalSht} штук`} */}
-            </Text>
+              {totals?.totalKg !== 0 && `Итого: ${totals?.totalKg} кг`}
+              {totals?.totalSht !== 0 && `и ${totals?.totalSht} штук`}
+            </Text> */}
             <Text style={styles.totalItemSumm}>
               Сумма: {sumSoputkaProds(listProdSoputka?.[0]?.list)} сом
             </Text>
@@ -120,7 +118,7 @@ export const SoputkaProductScreen = ({ route, navigation }) => {
                 styles={styles.sendBtn}
                 onclick={() => setModalConfirm(true)}
               >
-                Подтвердить
+                Подтвердить заявку
               </ViewButton>
             )}
           </View>

@@ -35,7 +35,7 @@ export const AddProdSoputkaSrceen = ({ navigation, route }) => {
   return (
     <View style={styles.parentBlock}>
       <TouchableOpacity onPress={listProdSale} style={styles.arrow}>
-        <Text style={styles.textBtn}>Список сопутствующих товаров</Text>
+        <Text style={styles.textBtn}>Список товаров</Text>
         <View style={styles.arrowInner}></View>
       </TouchableOpacity>
       <EveryInvoiceSoputka navigation={navigation} forAddTovar={forAddTovar} />

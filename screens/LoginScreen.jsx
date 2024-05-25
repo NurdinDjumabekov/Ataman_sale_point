@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { changeDataLogin, clearLogin } from "../store/reducers/stateSlice";
 import { ViewInput } from "../customsTags/ViewInput";
@@ -37,7 +37,13 @@ export const LoginScreen = ({ navigation }) => {
     <View styles={{ position: "relative" }}>
       <ViewContainer>
         <View>
-          <Image style={styles.imgLogo} source={logo} />
+          <View style={styles.logoBlock}>
+            <Image style={styles.imgLogo} source={logo} />
+            <View>
+              <Text style={styles.title}>Атаман</Text>
+              <Text style={styles.descr}>Победитель вкуса</Text>
+            </View>
+          </View>
           <ViewInput
             text="Введите логин"
             value={dataLogin?.login}
@@ -73,11 +79,32 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
 
+  logoBlock: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 0,
+    marginBottom: 20,
+  },
+
+  title: {
+    fontSize: 18,
+    fontWeight: "600",
+    lineHeight: 22,
+    textTransform: "uppercase",
+  },
+
+  descr: {
+    fontSize: 13,
+    fontWeight: "500",
+    lineHeight: 16,
+    textTransform: "uppercase",
+  },
+
   imgLogo: {
-    width: 140,
-    height: 140,
-    // backgroundColor: "green",
+    width: 90,
+    height: 90,
     alignSelf: "center",
-    marginBottom: 10,
   },
 });

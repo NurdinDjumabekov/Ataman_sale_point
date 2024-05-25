@@ -34,11 +34,14 @@ import UserInfo from "../components/Header/UserInfo";
 import { ReturnProductScreen } from "./ReturnProductScreen";
 import { ReturnProdHistoryScreen } from "./ReturnProdHistoryScreen";
 import SaleSearchScreen from "./SaleScreen/SaleSearchScreen";
+import { useColorScheme } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 export const Navigation = () => {
   const dispatch = useDispatch();
+
+  const checkColor = useColorScheme() === "dark";
 
   const { data } = useSelector((state) => state.saveDataSlice);
 
@@ -94,7 +97,7 @@ export const Navigation = () => {
             <Stack.Screen
               name="SoputkaProductScreen"
               component={SoputkaProductScreen}
-              options={{ title: "" }}
+              options={{ title: "Список товаров заявки" }}
               ////// список сопутствующих товаров
             />
 
@@ -228,7 +231,10 @@ export const Navigation = () => {
           </>
         )}
       </Stack.Navigator>
-      <StatusBar theme="auto" backgroundColor="rgba(47, 71, 190, 0.287)" />
+      <StatusBar
+        theme="auto"
+        backgroundColor={checkColor ? "#fff" : "rgba(139, 138, 138, 0.516)"}
+      />
     </NavigationContainer>
   );
 };
