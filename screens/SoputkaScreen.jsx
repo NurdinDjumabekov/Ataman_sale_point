@@ -63,8 +63,6 @@ export const SoputkaScreen = ({ navigation }) => {
 
   const { listAgents } = useSelector((state) => state.requestSlice);
 
-  console.log(listAgents, "listAgents");
-
   return (
     <>
       <SafeAreaView style={styles.container}>

@@ -10,6 +10,12 @@ export const AllHistoryInvoice = (props) => {
     navigation.navigate(keyLink, { guidInvoice });
   };
 
+  const status = {
+    0: "Не подтверждено",
+    1: "Отправлено",
+    2: "Подтверждено админом",
+  };
+
   return (
     <TouchableOpacity
       style={styles.everyProd}
@@ -28,11 +34,9 @@ export const AllHistoryInvoice = (props) => {
           </View>
         </View>
         <View style={styles.status}>
-          {item?.status === 0 ? (
-            <Text style={styles.bad}>Не подтверждено</Text>
-          ) : (
-            <Text style={styles.good}>Подтверждено</Text>
-          )}
+          <Text style={[item?.status === 0 ? styles.bad : styles.good]}>
+            {status?.[item.status]}
+          </Text>
         </View>
       </View>
       {item?.comment && <Text style={styles.comment}>{item?.comment}</Text>}
@@ -52,14 +56,12 @@ const styles = StyleSheet.create({
 
   everyProdInner: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "row",
   },
 
-  blockTitle: {
-    width: "67%",
-  },
+  blockTitle: { width: "67%" },
 
   blockTitleInner: {
     display: "flex",
@@ -110,10 +112,16 @@ const styles = StyleSheet.create({
 
   good: {
     color: "rgba(12, 169, 70, 0.9)",
-    fontSize: 12,
+    fontSize: 11,
+    fontWeight: "500",
+    textAlign: "left",
+    width: 100,
+  },
+
+  bad: {
+    color: "red",
+    fontSize: 11,
     fontWeight: "500",
     textAlign: "left",
   },
-
-  bad: { color: "red", fontSize: 12, fontWeight: "500", textAlign: "left" },
 });
