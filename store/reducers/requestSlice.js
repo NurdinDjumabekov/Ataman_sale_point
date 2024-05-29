@@ -227,38 +227,66 @@ export const getWorkShopsGorSale = createAsyncThunk(
   }
 );
 
+// /// getCategoryTT
+// export const getCategoryTT = createAsyncThunk(
+//   "getCategoryTT",
+//   /// для получения катеогрий товаров ТТ
+//   async function (props, { dispatch, rejectWithValue }) {
+//     const { location, seller_guid, type, workshop_guid } = props;
+
+//     const check = location == "Shipment" || location == "AddProdReturnSrceen"; ///// продажа и возрат
+
+//     const urlLink = check
+//       ? `${API}/tt/get_category?seller_guid=${seller_guid}&workshop_guid=${workshop_guid}` //// для пр0дажи и возрата
+//       : `${API}/tt/get_category_all`; //// для сопутки
+
+//     console.log(urlLink, "urlLink getCategoryTT");
+
+//     try {
+//       const response = await axios(urlLink);
+//       if (response.status >= 200 && response.status < 300) {
+//         const category_guid = response.data?.[0]?.category_guid || "";
+//         dispatch(changeActiveSelectCategory(category_guid)); /// исользую в продаже и в остатках
+
+//         if (type == "leftovers") {
+//           const obj = { seller_guid, category_guid, workshop_guid };
+//           await dispatch(getMyLeftovers(obj));
+//           //// для страницы остатков вызываю первую категорию
+//         } else if (type == "sale") {
+//           ////// для продажи и с0путки
+//           const sedData = { guid: category_guid, seller_guid, location };
+//           await dispatch(getProductTT({ ...sedData, workshop_guid }));
+//           //// get список продуктов сопутки по категориям
+//           //// сразу подставляю первую категорию
+//         }
+//         return response?.data;
+//       } else {
+//         throw Error(`Error: ${response.status}`);
+//       }
+//     } catch (error) {
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// );
+
 /// getCategoryTT
 export const getCategoryTT = createAsyncThunk(
   "getCategoryTT",
   /// для получения катеогрий товаров ТТ
-  async function (props, { dispatch, rejectWithValue }) {
-    const { location, seller_guid, type, workshop_guid } = props;
-
-    const check = location == "Shipment" || location == "AddProdReturnSrceen"; ///// продажа и возрат
-
-    const urlLink = check
-      ? `${API}/tt/get_category?seller_guid=${seller_guid}&workshop_guid=${workshop_guid}` //// для пр0дажи и возрата
-      : `${API}/tt/get_category_all`; //// для сопутки
-
-    console.log(urlLink, "urlLink getCategoryTT");
-
+  async function ({ seller_guid }, { dispatch, rejectWithValue }) {
     try {
-      const response = await axios(urlLink);
+      const response = await axios({
+        method: "GET",
+        url: `${API}/tt/get_category_all`,
+      }); ////// для получения категорий товаров
       if (response.status >= 200 && response.status < 300) {
         const category_guid = response.data?.[0]?.category_guid || "";
         dispatch(changeActiveSelectCategory(category_guid)); /// исользую в продаже и в остатках
 
-        if (type == "leftovers") {
-          const obj = { seller_guid, category_guid, workshop_guid };
-          await dispatch(getMyLeftovers(obj));
-          //// для страницы остатков вызываю первую категорию
-        } else if (type == "sale") {
-          ////// для продажи и с0путки
-          const sedData = { guid: category_guid, seller_guid, location };
-          await dispatch(getProductTT({ ...sedData, workshop_guid }));
-          //// get список продуктов сопутки по категориям
-          //// сразу подставляю первую категорию
-        }
+        dispatch(getProductTT({ category_guid, seller_guid }));
+        //// get список продуктов cортированные по категориям
+        //// сразу подставляю первую категорию
+
         return response?.data;
       } else {
         throw Error(`Error: ${response.status}`);
@@ -269,22 +297,44 @@ export const getCategoryTT = createAsyncThunk(
   }
 );
 
+// /// getProductTT
+// export const getProductTT = createAsyncThunk(
+//   "getProductTT",
+//   /// для получения продуктов
+//   async function (props, { dispatch, rejectWithValue }) {
+//     const { guid, seller_guid, location, workshop_guid } = props;
+
+//     const check = location == "Shipment" || location == "AddProdReturnSrceen"; ///// продажа и возрат
+
+//     const urlLink = check
+//       ? `${API}/tt/get_product?categ_guid=${guid}&seller_guid=${seller_guid}&workshop_guid=${workshop_guid}` ///// продажа и возрат
+//       : `${API}/tt/get_product_all?categ_guid=${guid}&workshop_guid=${workshop_guid}`; //// для сопутки
+
+//     console.log(urlLink, "urlLink getProductTT");
+//     try {
+//       const response = await axios(urlLink);
+//       if (response.status >= 200 && response.status < 300) {
+//         return response?.data;
+//       } else {
+//         throw Error(`Error: ${response.status}`);
+//       }
+//     } catch (error) {
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// );
+
 /// getProductTT
 export const getProductTT = createAsyncThunk(
   "getProductTT",
   /// для получения продуктов
   async function (props, { dispatch, rejectWithValue }) {
-    const { guid, seller_guid, location, workshop_guid } = props;
-
-    const check = location == "Shipment" || location == "AddProdReturnSrceen"; ///// продажа и возрат
-
-    const urlLink = check
-      ? `${API}/tt/get_product?categ_guid=${guid}&seller_guid=${seller_guid}&workshop_guid=${workshop_guid}` ///// продажа и возрат
-      : `${API}/tt/get_product_all?categ_guid=${guid}&workshop_guid=${workshop_guid}`; //// для сопутки
-
-    console.log(urlLink, "urlLink getProductTT");
+    const { category_guid, seller_guid } = props;
     try {
-      const response = await axios(urlLink);
+      const response = await axios({
+        method: "GET",
+        url: `${API}/tt/get_product_all?categ_guid=${category_guid}&seller_guid=${seller_guid}`,
+      });
       if (response.status >= 200 && response.status < 300) {
         return response?.data;
       } else {
@@ -331,7 +381,6 @@ export const searchProdSale = createAsyncThunk(
         `${API}/tt/get_product?search=${text}&seller_guid=${seller_guid}`
       );
       if (response.status >= 200 && response.status < 300) {
-        console.log(response?.data, "response?.data");
         return response?.data;
       } else {
         throw Error(`Error: ${response.status}`);
@@ -347,12 +396,6 @@ export const getMyLeftovers = createAsyncThunk(
   "getMyLeftovers",
   async function (props, { dispatch, rejectWithValue }) {
     const { seller_guid, category_guid, workshop_guid } = props;
-
-    console.log(
-      `${API}/tt/get_report_leftovers?seller_guid=${seller_guid}&categ_guid=${category_guid}&workshop_guid=${workshop_guid}`,
-      "getMyLeftovers"
-    );
-
     try {
       const response = await axios({
         method: "GET",
@@ -979,7 +1022,6 @@ export const getWorkShopsForRevision = createAsyncThunk(
         `${API}/tt/get_leftover_workshop?seller_guid=${seller_guid}`
       );
       if (response.status >= 200 && response.status < 300) {
-        console.log(response.data, "getWorkShopsForRevision");
         return response.data;
       } else {
         throw Error(`Error: ${response.status}`);

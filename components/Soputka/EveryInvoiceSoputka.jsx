@@ -3,7 +3,6 @@ import { useRoute } from "@react-navigation/native";
 import { FlatList, RefreshControl } from "react-native";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { clearListProductTT } from "../../store/reducers/requestSlice";
 import { EveryProduct } from "../EveryProduct";
 import { changeSearchProd } from "../../store/reducers/stateSlice";
 import { SearchProdsSoputka } from "./SearchProdsSoputka";
@@ -17,21 +16,12 @@ export const EveryInvoiceSoputka = ({ forAddTovar, navigation }) => {
   const location = route.name;
   /////////////////////////////////////////////////
 
-  const { preloader, listProductTT } = useSelector(
-    (state) => state.requestSlice
-  );
-
-  const getData = () => {
-    dispatch(changeSearchProd("")); ////// очищаю поиск
-    dispatch(clearListProductTT()); ////// очищаю список товаров
-  };
+  const { listProductTT } = useSelector((state) => state.requestSlice);
 
   useEffect(() => {
-    getData();
+    dispatch(changeSearchProd("")); ////// очищаю поиск
     navigation.setOptions({
-      headerRight: () => (
-        <SearchProdsSoputka getData={getData} location={location} />
-      ),
+      headerRight: () => <SearchProdsSoputka location={location} />,
     });
   }, []);
 
@@ -60,9 +50,6 @@ export const EveryInvoiceSoputka = ({ forAddTovar, navigation }) => {
                 />
               )}
               keyExtractor={(item, index) => `${item?.guid}${index}`}
-              refreshControl={
-                <RefreshControl refreshing={preloader} onRefresh={getData} />
-              }
             />
           </View>
         )}

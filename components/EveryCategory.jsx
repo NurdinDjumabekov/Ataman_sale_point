@@ -131,8 +131,6 @@ export const EveryCategory = ({ obj, navigation }) => {
     }
   };
 
-  console.log(obj, "obj");
-
   return (
     <ParentDiv onPress={clickCateg}>
       <View style={styles.shadow}></View>

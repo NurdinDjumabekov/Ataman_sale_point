@@ -1,3 +1,4 @@
+////hooks
 import React, { useCallback, useEffect, useRef } from "react";
 import { debounce } from "lodash";
 
@@ -9,7 +10,7 @@ import { TextInput, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { changeSearchProd } from "../../store/reducers/stateSlice";
 import { changeLocalData } from "../../store/reducers/saveDataSlice";
-import { searchProdTT } from "../../store/reducers/requestSlice";
+import { getCategoryTT, searchProdTT } from "../../store/reducers/requestSlice";
 
 ///// helpers
 import { getLocalDataUser } from "../../helpers/returnDataUser";
@@ -17,7 +18,7 @@ import { getLocalDataUser } from "../../helpers/returnDataUser";
 ///// imgs
 import searchIcon from "../../assets/icons/searchIcon.png";
 
-export const SearchProdsSoputka = ({ getData, location }) => {
+export const SearchProdsSoputka = ({ location }) => {
   const refInput = useRef();
 
   const dispatch = useDispatch();
@@ -46,7 +47,12 @@ export const SearchProdsSoputka = ({ getData, location }) => {
 
   const onChange = (text) => {
     dispatch(changeSearchProd(text));
-    text?.length === 0 ? getData() : searchData(text);
+    if (text?.length === 0) {
+      dispatch(changeSearchProd("")); ////// очищаю поиск
+      dispatch(getCategoryTT({ seller_guid: data?.seller_guid })); //// получаю все категории
+    } else {
+      searchData(text);
+    }
   };
 
   return (

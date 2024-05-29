@@ -39,7 +39,12 @@ export const AllHistoryInvoice = (props) => {
           </Text>
         </View>
       </View>
-      {item?.comment && <Text style={styles.comment}>{item?.comment}</Text>}
+      {item?.comment && (
+        <>
+          <Text style={[styles.date, styles.admin]}>Комментарий админа: </Text>
+          <Text style={styles.comment}>{item?.comment?.trimStart()}</Text>
+        </>
+      )}
     </TouchableOpacity>
   );
 };
@@ -97,10 +102,13 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
 
+  admin: {
+    marginTop: 5,
+  },
+
   comment: {
     fontSize: 14,
     fontWeight: "400",
-    marginTop: 5,
   },
 
   status: {

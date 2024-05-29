@@ -62,7 +62,6 @@ export const ModalWorkShop = (props) => {
   const choiceSeller = (guid) => {
     setObj({ ...obj, guid });
     ////// get список актуальных цех0в продавца
-    console.log(guid, "guid");
     dispatch(getWorkShopsForRevision(guid));
     closeSeller();
     workShopOpen(0);

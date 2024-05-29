@@ -6,7 +6,7 @@ import { ViewInput } from "../customsTags/ViewInput";
 import { ViewContainer } from "../customsTags/ViewContainer";
 import { ViewButton } from "../customsTags/ViewButton";
 import { logInAccount } from "../store/reducers/requestSlice";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/aaaa-removebg-preview.png";
 
 export const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -39,10 +39,6 @@ export const LoginScreen = ({ navigation }) => {
         <View>
           <View style={styles.logoBlock}>
             <Image style={styles.imgLogo} source={logo} />
-            <View>
-              <Text style={styles.title}>Атаман</Text>
-              <Text style={styles.descr}>Победитель вкуса</Text>
-            </View>
           </View>
           <ViewInput
             text="Введите логин"
@@ -71,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(47, 71, 190, 0.591)",
     backgroundColor: "#e5322d",
     position: "absolute",
-    bottom: 30,
+    bottom: 20,
     left: 10,
     right: 10,
     minWidth: "90%",
@@ -85,26 +81,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 0,
-    marginBottom: 20,
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: "600",
-    lineHeight: 22,
-    textTransform: "uppercase",
-  },
-
-  descr: {
-    fontSize: 13,
-    fontWeight: "500",
-    lineHeight: 16,
-    textTransform: "uppercase",
   },
 
   imgLogo: {
-    width: 90,
-    height: 90,
+    width: 170,
+    height: 170,
     alignSelf: "center",
   },
 });

@@ -20,7 +20,6 @@ export const AcceptInvoiceHistory = ({ navigation }) => {
     getData();
   }, []);
 
-  console.log(listAcceptInvoice, "listAcceptInvoice");
 
   return (
     <View style={styles.blockList}>
