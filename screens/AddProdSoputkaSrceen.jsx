@@ -78,7 +78,7 @@ export const AddProdSoputkaSrceen = ({ navigation, route }) => {
       </TouchableOpacity>
       {searchProd?.length === 0 && (
         <>
-          <Text style={styles.choiceCateg}>Выберите цех</Text>
+          <Text style={styles.choiceCateg}>Выберите категорию</Text>
           <View style={styles.blockSelect}>
             <RNPickerSelect
               onValueChange={onChangeCateg}

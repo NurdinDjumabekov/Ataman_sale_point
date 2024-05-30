@@ -12,10 +12,8 @@ import { ViewButton } from "../customsTags/ViewButton";
 
 /////redux
 import { changeLocalData } from "../store/reducers/saveDataSlice";
-import {
-  clearListCategory,
-  createInvoiceSoputkaTT,
-} from "../store/reducers/requestSlice";
+import { createInvoiceSoputkaTT } from "../store/reducers/requestSlice";
+import { clearListCategory } from "../store/reducers/requestSlice";
 import { clearListProductTT } from "../store/reducers/requestSlice";
 import { getHistorySoputka } from "../store/reducers/requestSlice";
 import { getListAgents } from "../store/reducers/requestSlice";
