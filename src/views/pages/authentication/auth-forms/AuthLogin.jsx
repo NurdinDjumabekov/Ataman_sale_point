@@ -31,13 +31,13 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Google from 'assets/images/icons/social-google.svg';
+import config from 'config';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = ({ ...others }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-  const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
 
   const googleHandler = async () => {
@@ -96,7 +96,7 @@ const AuthLogin = ({ ...others }) => {
                 borderColor: `${theme.palette.grey[100]} !important`,
                 color: `${theme.palette.grey[900]}!important`,
                 fontWeight: 500,
-                borderRadius: `${customization.borderRadius}px`
+                borderRadius: `${config.borderRadius}px`
               }}
               disableRipple
               disabled

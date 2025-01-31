@@ -1,6 +1,7 @@
 // assets
 import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons-react';
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
+import DownloadInvoicePage from 'views/DownloadInvoicePage/DownloadInvoicePage';
 
 const utilities = {
   id: 'Главное',
@@ -9,7 +10,7 @@ const utilities = {
   children: [
     {
       id: 'download',
-      title: 'Загрузка файлов',
+      title: 'Загрузка накладных',
       type: 'item',
       url: '/utils/download-invoice',
       icon: DownloadOutlinedIcon,

@@ -21,11 +21,11 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 // project imports
 import SubCard from 'ui-component/cards/SubCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
-import { SET_BORDER_RADIUS, SET_FONT_FAMILY } from 'store/actions';
 import { gridSpacing } from 'store/constant';
 
 // assets
 import { IconSettings } from '@tabler/icons-react';
+import config from 'config';
 
 // concat 'px'
 function valueText(value) {
@@ -37,7 +37,6 @@ function valueText(value) {
 const Customization = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const customization = useSelector((state) => state.customization);
 
   // drawer on/off
   const [open, setOpen] = useState(false);
@@ -46,17 +45,17 @@ const Customization = () => {
   };
 
   // state - border radius
-  const [borderRadius, setBorderRadius] = useState(customization.borderRadius);
+  const [borderRadius, setBorderRadius] = useState(config.borderRadius);
   const handleBorderRadius = (event, newValue) => {
     setBorderRadius(newValue);
   };
 
   useEffect(() => {
-    dispatch({ type: SET_BORDER_RADIUS, borderRadius });
+    // dispatch({ type: SET_BORDER_RADIUS, borderRadius });
   }, [dispatch, borderRadius]);
 
   let initialFont;
-  switch (customization.fontFamily) {
+  switch (config.fontFamily) {
     case `'Inter', sans-serif`:
       initialFont = 'Inter';
       break;
@@ -85,7 +84,6 @@ const Customization = () => {
         newFont = `'Roboto', sans-serif`;
         break;
     }
-    dispatch({ type: SET_FONT_FAMILY, fontFamily: newFont });
   }, [dispatch, fontFamily]);
 
   return (
@@ -135,8 +133,8 @@ const Customization = () => {
                 <FormControl>
                   <RadioGroup
                     aria-label="font-family"
-                    value={fontFamily}
-                    onChange={(e) => setFontFamily(e.target.value)}
+                    // value={fontFamily}
+                    // onChange={(e) => setFontFamily(e.target.value)}
                     name="row-radio-buttons-group"
                   >
                     <FormControlLabel

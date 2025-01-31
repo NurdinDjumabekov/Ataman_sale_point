@@ -26,10 +26,6 @@ const MainRoutes = {
       path: '/',
       element: <DashboardDefault />
     },
-    // {
-    //   path: 'dashboard',
-    //   children: [{ path: 'default', element: <DashboardDefault /> }]
-    // },
     {
       path: 'utils',
       children: [{ path: 'download-invoice', element: <DownloadInvoicePage /> }]

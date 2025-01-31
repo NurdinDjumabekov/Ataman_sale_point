@@ -3,9 +3,11 @@
  * @param {JsonObject} theme theme customization object
  */
 
+import config from 'config';
+
 export default function themeTypography(theme) {
   return {
-    fontFamily: theme?.customization?.fontFamily,
+    fontFamily: config?.fontFamily,
     h6: {
       fontWeight: 500,
       color: theme.heading,

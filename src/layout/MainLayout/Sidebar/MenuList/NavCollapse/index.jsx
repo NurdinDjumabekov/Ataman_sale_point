@@ -18,12 +18,12 @@ import NavItem from '../NavItem';
 // assets
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import config from 'config';
 
 // ==============================|| SIDEBAR MENU LIST COLLAPSE ITEMS ||============================== //
 
 const NavCollapse = ({ menu, level }) => {
   const theme = useTheme();
-  const customization = useSelector((state) => state.customization);
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -99,7 +99,7 @@ const NavCollapse = ({ menu, level }) => {
     <>
       <ListItemButton
         sx={{
-          borderRadius: `${customization.borderRadius}px`,
+          borderRadius: `${config.borderRadius}px`,
           mb: 0.5,
           alignItems: 'flex-start',
           backgroundColor: level > 1 ? 'transparent !important' : 'inherit',

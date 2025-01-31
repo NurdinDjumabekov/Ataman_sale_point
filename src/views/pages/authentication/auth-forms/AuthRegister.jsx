@@ -32,13 +32,13 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import config from 'config';
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
 const AuthRegister = ({ ...others }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-  const customization = useSelector((state) => state.customization);
   const [showPassword, setShowPassword] = useState(false);
   const [checked, setChecked] = useState(true);
 
@@ -103,7 +103,7 @@ const AuthRegister = ({ ...others }) => {
                 borderColor: `${theme.palette.grey[100]} !important`,
                 color: `${theme.palette.grey[900]}!important`,
                 fontWeight: 500,
-                borderRadius: `${customization.borderRadius}px`
+                borderRadius: `${config.borderRadius}px`
               }}
               disableRipple
               disabled

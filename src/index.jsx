@@ -1,10 +1,15 @@
 import { createRoot } from 'react-dom/client';
 
-import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
 import App from './App';
-import reducer from './store/reducer';
+
+import reportWebVitals from 'reportWebVitals';
+// import { BrowserRouter } from 'react-router-dom';
+import { store } from 'store';
+import { persistor } from 'store';
+import { ToastContainer } from 'react-toastify';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -21,17 +26,33 @@ import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
 
+////// style
 import 'assets/scss/style.scss';
-import reportWebVitals from 'reportWebVitals';
+import './index.scss';
 
 const container = document.getElementById('root');
-const root = createRoot(container);
-const store = configureStore({ reducer });
-
-root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
+if (container) {
+  const root = createRoot(container);
+  root.render(
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ToastContainer
+          autoClose={5000}
+          limit={3}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition="Bounce"
+        />
+        <App />
+      </PersistGate>
+    </Provider>
+  );
+}
 
 reportWebVitals();
