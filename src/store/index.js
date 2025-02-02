@@ -4,10 +4,10 @@ import storage from 'redux-persist/lib/storage';
 
 //// slice
 import saveDataSlice from './reducers/saveDataSlice';
-import mainSlice from './reducers/mainSlice';
+import invoiceSlice from './reducers/invoiceSlice';
 
 const reducer = combineReducers({
-  mainSlice,
+  invoiceSlice,
   saveDataSlice
 });
 

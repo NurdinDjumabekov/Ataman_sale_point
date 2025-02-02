@@ -57,7 +57,7 @@ const MainCard = React.forwardRef(
 
         {/* card content */}
         {content && (
-          <CardContent sx={contentSX} className={contentClass}>
+          <CardContent sx={contentSX} className={contentClass} >
             {children}
           </CardContent>
         )}

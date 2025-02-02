@@ -1,20 +1,24 @@
+//////// hooks
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 /////// fns
+import { getData, loadFileInvoiceReq } from 'store/reducers/invoiceSlice';
 
 /////// icons
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 
 ////// components
-import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 import MainCard from 'ui-component/cards/MainCard';
+import DatePicker from 'react-datepicker';
 
 ////// style
 import './style.scss';
-import { getData, loadFileInvoiceReq } from 'store/reducers/mainSlice';
 
 ////// helpers
+import { ru } from 'date-fns/locale';
+import { parse } from 'date-fns';
+import ListInvoice from 'components/DownloadInvoicePage/ListInvoice/ListInvoice';
 
 const DownloadInvoicePage = () => {
   const [file, setFile] = useState(null);
@@ -22,14 +26,13 @@ const DownloadInvoicePage = () => {
 
   const dispatch = useDispatch();
 
-  const { nurdin } = useSelector((state) => state.mainSlice);
+  const { listInvoice } = useSelector((state) => state.invoiceSlice);
 
   const handleDrop = (e) => {
-    /// загркузка файла через пертаскивание
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
     if (droppedFile) {
-      setFile(droppedFile); // Сохраняем файл в состоянии
+      setFile(droppedFile);
       const formData = new FormData();
       formData.append('file', droppedFile);
       dispatch(loadFileInvoiceReq({ data: formData }));
@@ -37,14 +40,13 @@ const DownloadInvoicePage = () => {
   };
 
   const onChange = (e) => {
-    /// загркузка файла через нажатие
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
       const formData = new FormData();
       formData.append('file', selectedFile);
       dispatch(loadFileInvoiceReq(formData));
-    } // Сохраняем файл в состоянии
+    }
   };
 
   // console.log(file, 'file');
@@ -58,6 +60,12 @@ const DownloadInvoicePage = () => {
     dispatch(getData({}));
   }, []);
 
+  const checkListInvoice = listInvoice?.length == 0;
+
+  console.log(listInvoice, 'listInvoice');
+
+  const arr = [];
+
   return (
     <MainCard
       title="Загрузите файл с накладными"
@@ -69,13 +77,41 @@ const DownloadInvoicePage = () => {
       }}
     >
       <div className="downloadInvoicePage" onDrop={handleDrop} onDragOver={handleDragOver}>
-        <input ref={fileInputRef} type="file" style={{ display: 'none' }} onChange={onChange} />
-        <button onClick={handleButtonClick}>
-          <DownloadOutlinedIcon />
-          <p>Загрузить файлы</p>
-        </button>
-        {file && <div>Выбран файл: {file.name}</div>}
+        <div className="dateSort">
+          <DatePicker
+            // selected={parse(new Date(), 'yyyy-MM-dd')}
+            selected={new Date()}
+            // onChange={onChangeDate}
+            yearDropdownItemNumber={100}
+            placeholderText="ДД.ММ.ГГГГ"
+            shouldCloseOnSelect={true}
+            scrollableYearDropdown
+            dateFormat="dd.MM.yyyy"
+            locale={ru}
+          />
+        </div>
+        {!!file && !!!checkListInvoice ? (
+          <button onClick={handleButtonClick} className="downloadFileSecond">
+            <DownloadOutlinedIcon />
+            <p>Загрузить файл</p>
+          </button>
+        ) : (
+          <button onClick={handleButtonClick} className="downloadFileMain">
+            <DownloadOutlinedIcon />
+            <p>Загрузить файл</p>
+          </button>
+        )}
+
+        {/* {!checkListInvoice && <ListInvoice listInvoice={listInvoice} />} */}
       </div>
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".xls,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+        style={{ display: 'none' }}
+        onChange={onChange}
+      />
     </MainCard>
   );
 };
@@ -183,3 +219,13 @@ export default DownloadInvoicePage;
     ]
   }
 ];
+
+// var orders_guid = await db.query_await(
+//   `
+//   EXEC [dbo].[create_edit_order]
+//       @action_type = 1,
+//       @order_total_sum = 100.50,
+//       @order_total_count = 5,
+//       @order_total_count_kg = 2;
+//   `
+// );

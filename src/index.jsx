@@ -5,11 +5,13 @@ import { Provider } from 'react-redux';
 import App from './App';
 
 import reportWebVitals from 'reportWebVitals';
-// import { BrowserRouter } from 'react-router-dom';
 import { store } from 'store';
 import { persistor } from 'store';
 import { ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
+
+////// datepicker
+import 'react-datepicker/dist/react-datepicker.css';
 
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';

@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import axiosInstance from 'axiosInstance';
+import { myAlert } from 'helpers/myAlert';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const initialState = {
-  nurdin: 'всем првивет!'
+  preloader_inv: false,
+  listInvoice: []
 };
 
 ////// getData -
@@ -29,6 +31,9 @@ export const loadFileInvoiceReq = createAsyncThunk('loadFileInvoiceReq', async f
   try {
     const response = await axiosInstance.post(url, data);
     if (response.status >= 200 && response.status < 300) {
+      if (response?.data?.length == 0) {
+        myAlert('Файл пустой', 'error');
+      }
       return response?.data;
     } else {
       throw Error(`Error: ${response.status}`);
@@ -38,8 +43,8 @@ export const loadFileInvoiceReq = createAsyncThunk('loadFileInvoiceReq', async f
   }
 });
 
-const mainSlice = createSlice({
-  name: 'mainSlice',
+const invoiceSlice = createSlice({
+  name: 'invoiceSlice',
   initialState,
   reducers: {
     // clearListOrdersAgents: (state, action) => {
@@ -49,21 +54,23 @@ const mainSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    // ////////////// logInAccount
-    // builder.addCase(logInAccount.fulfilled, (state, action) => {
-    //   state.preloader = false;
-    // });
-    // builder.addCase(logInAccount.rejected, (state, action) => {
-    //   state.error = action.payload;
-    //   state.preloader = false;
-    //   myAlert('Неверный логин или пароль');
-    // });
-    // builder.addCase(logInAccount.pending, (state, action) => {
-    //   state.preloader = true;
-    // });
+    ////////////// loadFileInvoiceReq
+    builder.addCase(loadFileInvoiceReq.fulfilled, (state, action) => {
+      state.preloader_inv = false;
+      state.listInvoice = action.payload;
+    });
+    builder.addCase(loadFileInvoiceReq.rejected, (state, action) => {
+      state.error = action.payload;
+      state.listInvoice = [];
+      myAlert('Не удалось загрузить данные', 'error');
+      state.preloader_inv = false;
+    });
+    builder.addCase(loadFileInvoiceReq.pending, (state, action) => {
+      state.preloader_inv = true;
+    });
   }
 });
 
-export const {} = mainSlice.actions;
+export const {} = invoiceSlice.actions;
 
-export default mainSlice.reducer;
+export default invoiceSlice.reducer;

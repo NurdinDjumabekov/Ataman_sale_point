@@ -1,0 +1,99 @@
+.invoice-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  gap: 10px;
+
+  .titles {
+    width: 300px;
+    height: 100%;
+    background-color: #f6f7f880;
+    border: 1px solid #e8eaee;
+    border-radius: 5px;
+    padding: 3px 0px;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 250px);
+    overflow-y: scroll;
+
+    > div {
+      width: 100%;
+      padding: 10px 10px;
+      border-bottom: 1px solid #e3e8ef;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+
+      p {
+        width: calc(100% - 25px);
+        font-size: 13px;
+      }
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      color: #22222264;
+    }
+  }
+
+  .prods {
+    width: calc(100% - 310px);
+    max-height: calc(100vh - 250px);
+    overflow-y: scroll;
+    padding-right: 5px;
+  }
+
+  .invoice-card {
+    background-color: #f6f7f880;
+    border: 1px solid #e8eaee;
+    border-radius: 5px;
+    padding: 20px;
+    width: 100%;
+    margin: 10px 0 0 0;
+
+    &:first-child {
+      margin: 0;
+    }
+
+    > h2 {
+      font-size: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    > p {
+      font-size: 14px;
+      color: #666;
+      margin-top: 3px;
+    }
+
+    .last {
+      margin-bottom: 5px;
+    }
+  }
+
+  .product-list {
+    .product-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th,
+      td {
+        padding: 5px;
+        text-align: left;
+        border: 1px solid #ddd;
+        font-size: 12px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      td {
+        background-color: #fff;
+      }
+    }
+  }
+}
