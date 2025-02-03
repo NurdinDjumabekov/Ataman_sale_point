@@ -1,0 +1,21 @@
+.generateBlock {
+  display: flex;
+  align-items: center;
+}
+
+.activePdf {
+  height: 38px;
+  background: #805dca;
+  padding: 2px 15px 3px;
+  border-radius: 5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}

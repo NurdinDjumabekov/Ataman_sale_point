@@ -5,7 +5,6 @@ export const myAlert = (message, type = 'info') => {
     position: 'top-right',
     hideProgressBar: false,
     closeOnClick: true,
-    draggable: true,
-    theme: 'dark'
+    draggable: true
   });
 };

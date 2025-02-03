@@ -39,7 +39,8 @@
   }
 
   .prods {
-    width: calc(100% - 310px);
+    width: calc(100% - 0px);
+    // width: calc(100% - 310px);
     max-height: calc(100vh - 250px);
     overflow-y: scroll;
     padding-right: 5px;
@@ -63,14 +64,31 @@
       color: #333;
     }
 
-    > p {
-      font-size: 14px;
-      color: #666;
-      margin-top: 3px;
-    }
+    .info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      height: 30px;
 
-    .last {
-      margin-bottom: 5px;
+      p {
+        font-size: 14px;
+        color: #666;
+      }
+
+      > label {
+        margin-right: 0px !important;
+
+        span:nth-child(1) {
+          padding: 0px !important;
+          padding-right: 0px !important;
+          margin-bottom: 5px;
+        }
+
+        span:nth-child(2) {
+          margin: 3px 0 0 0 !important;
+        }
+      }
     }
   }
 

@@ -3,14 +3,18 @@ import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 /////// fns
-import { getData, loadFileInvoiceReq } from 'store/reducers/invoiceSlice';
+import { getData, listInvoiceFN, loadFileInvoiceReq } from 'store/reducers/invoiceSlice';
 
 /////// icons
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
+import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
 
 ////// components
 import MainCard from 'ui-component/cards/MainCard';
 import DatePicker from 'react-datepicker';
+import ListInvoice from 'components/DownloadInvoicePage/ListInvoice/ListInvoice';
+import GeneratePdfInvoice from 'components/DownloadInvoicePage/GeneratePdfInvoice/GeneratePdfInvoice';
+import GeneratePdfCheque from 'components/DownloadInvoicePage/GeneratePdfCheque/GeneratePdfCheque';
 
 ////// style
 import './style.scss';
@@ -18,10 +22,8 @@ import './style.scss';
 ////// helpers
 import { ru } from 'date-fns/locale';
 import { parse } from 'date-fns';
-import ListInvoice from 'components/DownloadInvoicePage/ListInvoice/ListInvoice';
 
 const DownloadInvoicePage = () => {
-  const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -32,29 +34,31 @@ const DownloadInvoicePage = () => {
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
     if (droppedFile) {
-      setFile(droppedFile);
       const formData = new FormData();
       formData.append('file', droppedFile);
-      dispatch(loadFileInvoiceReq({ data: formData }));
+      dispatch(loadFileInvoiceReq(formData));
+      e.target.value = '';
     }
   };
 
   const onChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      setFile(selectedFile);
       const formData = new FormData();
       formData.append('file', selectedFile);
       dispatch(loadFileInvoiceReq(formData));
+      e.target.value = '';
     }
   };
-
-  // console.log(file, 'file');
 
   //// чтобы избежать открытия файла в браузере и перезагрузки страницы
   const handleDragOver = (e) => e.preventDefault();
   //// нажатте на button => открытие кнопки
   const handleButtonClick = () => fileInputRef.current.click();
+
+  const clearData = () => {
+    dispatch(listInvoiceFN([]));
+  };
 
   useEffect(() => {
     dispatch(getData({}));
@@ -62,13 +66,9 @@ const DownloadInvoicePage = () => {
 
   const checkListInvoice = listInvoice?.length == 0;
 
-  console.log(listInvoice, 'listInvoice');
-
-  const arr = [];
-
   return (
     <MainCard
-      title="Загрузите файл с накладными"
+      title={checkListInvoice ? 'Загрузите файл с накладными' : 'Список накладных'}
       sx={{
         height: '100%',
         '& > div:nth-of-type(2)': {
@@ -77,32 +77,44 @@ const DownloadInvoicePage = () => {
       }}
     >
       <div className="downloadInvoicePage" onDrop={handleDrop} onDragOver={handleDragOver}>
-        <div className="dateSort">
-          <DatePicker
-            // selected={parse(new Date(), 'yyyy-MM-dd')}
-            selected={new Date()}
-            // onChange={onChangeDate}
-            yearDropdownItemNumber={100}
-            placeholderText="ДД.ММ.ГГГГ"
-            shouldCloseOnSelect={true}
-            scrollableYearDropdown
-            dateFormat="dd.MM.yyyy"
-            locale={ru}
-          />
+        <div className="header">
+          {!!!checkListInvoice && (
+            <button onClick={clearData} className="downloadFileSecond">
+              <AutoDeleteIcon />
+              <p>Сбросить данные</p>
+            </button>
+          )}
+          <GeneratePdfCheque listInvoice={listInvoice?.filter((item) => item.check_key == 1)} />
+          <GeneratePdfInvoice listInvoice={listInvoice?.filter((item) => item.check_key == 1)} />
+          {/* {!!file && !!!checkListInvoice && (
+            <button onClick={handleButtonClick} className="downloadFileSecond">
+              <DownloadOutlinedIcon />
+              <p>Загрузить файл</p>
+            </button>
+          )} */}
+          {/* <div className="dateSort">
+            <DatePicker
+              // selected={parse(new Date(), 'yyyy-MM-dd')}
+              selected={new Date()}
+              // onChange={onChangeDate}
+              yearDropdownItemNumber={100}
+              placeholderText="ДД.ММ.ГГГГ"
+              shouldCloseOnSelect={true}
+              scrollableYearDropdown
+              dateFormat="dd.MM.yyyy"
+              locale={ru}
+            />
+          </div> */}
         </div>
-        {!!file && !!!checkListInvoice ? (
-          <button onClick={handleButtonClick} className="downloadFileSecond">
-            <DownloadOutlinedIcon />
-            <p>Загрузить файл</p>
-          </button>
-        ) : (
+
+        {!!checkListInvoice ? (
           <button onClick={handleButtonClick} className="downloadFileMain">
             <DownloadOutlinedIcon />
             <p>Загрузить файл</p>
           </button>
+        ) : (
+          <ListInvoice listInvoice={listInvoice} />
         )}
-
-        {/* {!checkListInvoice && <ListInvoice listInvoice={listInvoice} />} */}
       </div>
 
       <input

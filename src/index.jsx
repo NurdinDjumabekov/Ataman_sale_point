@@ -4,10 +4,8 @@ import { Provider } from 'react-redux';
 
 import App from './App';
 
-import reportWebVitals from 'reportWebVitals';
-import { store } from 'store';
-import { persistor } from 'store';
-import { ToastContainer } from 'react-toastify';
+import { store, persistor } from 'store';
+import { Bounce, ToastContainer } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
 
 ////// datepicker
@@ -31,6 +29,7 @@ import '@fontsource/poppins/700.css';
 ////// style
 import 'assets/scss/style.scss';
 import './index.scss';
+import reportWebVitals from 'reportWebVitals';
 
 const container = document.getElementById('root');
 if (container) {
@@ -39,17 +38,16 @@ if (container) {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ToastContainer
-          autoClose={5000}
-          limit={3}
-          hideProgressBar={false}
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar
           newestOnTop={false}
           closeOnClick
           rtl={false}
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="light"
-          transition="Bounce"
+          theme="dark"
         />
         <App />
       </PersistGate>

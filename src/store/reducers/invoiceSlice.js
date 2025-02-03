@@ -43,14 +43,29 @@ export const loadFileInvoiceReq = createAsyncThunk('loadFileInvoiceReq', async f
   }
 });
 
+////// crudInvoiceReq - crud накладные
+export const crudInvoiceReq = createAsyncThunk('crudInvoiceReq', async function (data, { dispatch, rejectWithValue }) {
+  const url = `${apiUrl}/invoice/crud`;
+  try {
+    const response = await axiosInstance.post(url, data);
+    if (response.status >= 200 && response.status < 300) {
+      return response?.data?.[0]?.result;
+    } else {
+      throw Error(`Error: ${response.status}`);
+    }
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
 const invoiceSlice = createSlice({
   name: 'invoiceSlice',
   initialState,
   reducers: {
-    // clearListOrdersAgents: (state, action) => {
-    //   state.listOrders = [];
-    //   /// очищаю список, хрянящий заказы всех ТА
-    // },
+    listInvoiceFN: (state, action) => {
+      state.listInvoice = action.payload;
+      /// очищаю список, хрянящий заказы всех ТА
+    }
   },
 
   extraReducers: (builder) => {
@@ -71,6 +86,6 @@ const invoiceSlice = createSlice({
   }
 });
 
-export const {} = invoiceSlice.actions;
+export const { listInvoiceFN } = invoiceSlice.actions;
 
 export default invoiceSlice.reducer;
