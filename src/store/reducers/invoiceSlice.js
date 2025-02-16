@@ -10,11 +10,11 @@ const initialState = {
   listInvoice: []
 };
 
-////// getData -
-export const getData = createAsyncThunk('getData', async function (props, { dispatch, rejectWithValue }) {
-  const url = `${apiUrl}/invoice/load`;
+////// getInvoiceReq -
+export const getInvoiceReq = createAsyncThunk('getInvoiceReq', async function (data, { dispatch, rejectWithValue }) {
+  const url = `${apiUrl}/invoice/main`;
   try {
-    const response = await axiosInstance(url);
+    const response = await axiosInstance.post(url, data);
     if (response.status >= 200 && response.status < 300) {
       return response?.data;
     } else {
@@ -72,15 +72,27 @@ const invoiceSlice = createSlice({
     ////////////// loadFileInvoiceReq
     builder.addCase(loadFileInvoiceReq.fulfilled, (state, action) => {
       state.preloader_inv = false;
-      state.listInvoice = action.payload;
     });
     builder.addCase(loadFileInvoiceReq.rejected, (state, action) => {
       state.error = action.payload;
-      state.listInvoice = [];
       myAlert('Не удалось загрузить данные', 'error');
       state.preloader_inv = false;
     });
     builder.addCase(loadFileInvoiceReq.pending, (state, action) => {
+      state.preloader_inv = true;
+    });
+
+    ////////////// getInvoiceReq
+    builder.addCase(getInvoiceReq.fulfilled, (state, action) => {
+      state.preloader_inv = false;
+      state.listInvoice = action.payload;
+    });
+    builder.addCase(getInvoiceReq.rejected, (state, action) => {
+      state.error = action.payload;
+      state.listInvoice = [];
+      state.preloader_inv = false;
+    });
+    builder.addCase(getInvoiceReq.pending, (state, action) => {
       state.preloader_inv = true;
     });
   }

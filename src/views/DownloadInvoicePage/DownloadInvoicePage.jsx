@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 /////// fns
-import { getData, listInvoiceFN, loadFileInvoiceReq } from 'store/reducers/invoiceSlice';
+import { getInvoiceReq, listInvoiceFN, loadFileInvoiceReq } from 'store/reducers/invoiceSlice';
 
 /////// icons
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
@@ -46,6 +46,7 @@ const DownloadInvoicePage = () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append('file', selectedFile);
+      formData.append('name', selectedFile?.name);
       dispatch(loadFileInvoiceReq(formData));
       e.target.value = '';
     }
@@ -61,37 +62,35 @@ const DownloadInvoicePage = () => {
   };
 
   useEffect(() => {
-    dispatch(getData({}));
+    getData();
   }, []);
+
+  const getData = () => {
+    dispatch(getInvoiceReq({ date: '2025-02-16' }));
+  };
 
   const checkListInvoice = listInvoice?.length == 0;
 
   return (
     <MainCard
-      title={checkListInvoice ? 'Загрузите файл с накладными' : 'Список накладных'}
-      sx={{
-        height: '100%',
-        '& > div:nth-of-type(2)': {
-          height: 'calc(100% - 72px)'
-        }
-      }}
+      title={`Список накладных (${listInvoice?.length})`}
+      sx={{ height: '100%', '& > div:nth-of-type(2)': { height: 'calc(100% - 0px)', padding: 0 } }}
+      contentSX={{ padding: 0 }}
     >
       <div className="downloadInvoicePage" onDrop={handleDrop} onDragOver={handleDragOver}>
         <div className="header">
-          {!!!checkListInvoice && (
+          {/* {!!!checkListInvoice && (
             <button onClick={clearData} className="downloadFileSecond">
               <AutoDeleteIcon />
               <p>Сбросить данные</p>
             </button>
-          )}
+          )} */}
           <GeneratePdfCheque listInvoice={listInvoice?.filter((item) => item.check_key == 1)} />
           <GeneratePdfInvoice listInvoice={listInvoice?.filter((item) => item.check_key == 1)} />
-          {/* {!!file && !!!checkListInvoice && (
-            <button onClick={handleButtonClick} className="downloadFileSecond">
-              <DownloadOutlinedIcon />
-              <p>Загрузить файл</p>
-            </button>
-          )} */}
+          <button onClick={handleButtonClick} className="downloadFileSecond">
+            <DownloadOutlinedIcon />
+            <p>Загрузить файл</p>
+          </button>
           {/* <div className="dateSort">
             <DatePicker
               // selected={parse(new Date(), 'yyyy-MM-dd')}
@@ -107,14 +106,14 @@ const DownloadInvoicePage = () => {
           </div> */}
         </div>
 
-        {!!checkListInvoice ? (
+        {/* {!!checkListInvoice ? (
           <button onClick={handleButtonClick} className="downloadFileMain">
             <DownloadOutlinedIcon />
             <p>Загрузить файл</p>
           </button>
         ) : (
-          <ListInvoice listInvoice={listInvoice} />
-        )}
+          )} */}
+        <ListInvoice list={listInvoice} />
       </div>
 
       <input
@@ -240,4 +239,17 @@ export default DownloadInvoicePage;
 //       @order_total_count = 5,
 //       @order_total_count_kg = 2;
 //   `
+// );
+
+// const query = await db.query_await(
+//   `SELECT * FROM [dbo].[view_invoice] WHERE order_guid = '${order_guid[0].order_guid}'`
+// );
+
+// const list = await Promise.all(
+//   query.map(async (item) => {
+//     const prods = await db.query_await(
+//       `SELECT * FROM [dbo].[invoice_product] WHERE invoice_guid = '${item.invoice_guid}'`
+//     );
+//     return { ...item, prods };
+//   })
 // );

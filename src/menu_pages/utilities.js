@@ -10,7 +10,7 @@ const utilities = {
   children: [
     {
       id: 'download',
-      title: 'Загрузка накладных',
+      title: 'Список накладных',
       type: 'item',
       url: '/utils/download-invoice',
       icon: DownloadOutlinedIcon,
