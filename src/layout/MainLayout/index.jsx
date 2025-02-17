@@ -17,6 +17,7 @@ import { drawerWidth } from 'store/constant';
 
 // assets
 import { IconChevronRight } from '@tabler/icons-react';
+import Preloader from 'common/ConfirmModal/Preloader/Preloader';
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' && prop !== 'theme' })(({ theme, open }) => ({
   ...theme.typography.mainContent,
@@ -89,6 +90,8 @@ const MainLayout = () => {
         <Outlet />
       </Main>
       <Customization />
+
+      <Preloader />
     </Box>
   );
 };

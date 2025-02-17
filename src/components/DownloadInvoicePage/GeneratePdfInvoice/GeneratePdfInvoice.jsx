@@ -1,30 +1,28 @@
 ////// hooks
 import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 
 ///// tags & components
-import { Document, Page, Text, View, PDFViewer, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image, pdf } from '@react-pdf/renderer';
 import QRCode from 'qrcode';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import IconButton from '@mui/material/IconButton';
 
 ////// icons
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import CloseIcon from '@mui/icons-material/Close';
 
 ////// style
-import { styled } from '@mui/material/styles';
 import { styles } from './style';
 import './style.scss';
 
 ////// helpers
 import { myAlert } from 'helpers/myAlert';
 
+////// fns
+import { preloader_inv_FN } from 'store/reducers/invoiceSlice';
+
 const GeneratePdfInvoice = ({ listInvoice }) => {
   const iframeRef = useRef(null);
-
   const [pdfUrl, setPdfUrl] = useState('');
+  const dispatch = useDispatch();
 
   const handlePrint = async () => {
     const err = 'Отметьте галочками накладные, которые хотите распечатать';
@@ -32,14 +30,13 @@ const GeneratePdfInvoice = ({ listInvoice }) => {
     const blob = await pdf(<MyDocument listInvoice={listInvoice} />).toBlob();
     const url = URL.createObjectURL(blob);
     setPdfUrl(url);
-
-    console.log(iframeRef, 'iframeRef');
-
+    // Таймаут нужен, чтобы iframe успел загрузить PDF перед печатью
     setTimeout(() => {
       if (iframeRef.current) {
+        iframeRef.current.contentWindow.focus();
         iframeRef.current.contentWindow.print();
       }
-    }, 500);
+    }, 1000);
   };
 
   return (

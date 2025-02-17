@@ -27,6 +27,7 @@ import { styleCategName, styleCategBox, styleInnerTable, obj52, obj82 } from './
 import './style.scss';
 
 import { crudInvoiceReq, listInvoiceFN } from 'store/reducers/invoiceSlice';
+import { myAlert } from 'helpers/myAlert';
 
 const TableInvoice = (props) => {
   const { item } = props;
@@ -75,6 +76,7 @@ const TableInvoice = (props) => {
     setDel('');
     const res = await dispatch(crudInvoiceReq(send)).unwrap();
     if (!!res) {
+      myAlert('Накладная удалена');
       dispatch(listInvoiceFN(newListFN));
     } else myAlert('Упс, повторите пожалуйста еще раз', 'error');
   };
@@ -134,9 +136,9 @@ const TableInvoice = (props) => {
                         <div onClick={() => editStatus(i)}>
                           {/* <Checkbox checked={!!i?.status} sx={{ '& .MuiSvgIcon-root': { fontSize: 22 } }} /> */}
                         </div>
-                        <div style={{ height: 21 }} onClick={() => setDel(i)}>
+                        {/* <div style={{ height: 21 }} onClick={() => setDel(i)}>
                           <DeleteIcon width="20" height="20" color="red" />
-                        </div>
+                        </div> */}
                       </div>
                     </TableCell>
                   </TableRow>

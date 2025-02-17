@@ -16,6 +16,7 @@ import { myAlert } from 'helpers/myAlert';
 ////// icons
 import logo from '../../../assets/images/logo.png';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
+import { preloader_inv_FN } from 'store/reducers/invoiceSlice';
 
 const GeneratePdfCheque = ({ listInvoice }) => {
   const dispatch = useDispatch();
@@ -100,7 +101,11 @@ const GeneratePdfCheque = ({ listInvoice }) => {
 
   const printFn = () => {
     if (listInvoice?.length == 0) return myAlert('У вас пустой список!', 'error');
+    dispatch(preloader_inv_FN(true));
     handlePrint(listInvoice);
+    setTimeout(() => {
+      dispatch(preloader_inv_FN(false));
+    }, 5000);
   };
 
   return (
