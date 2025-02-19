@@ -18,6 +18,7 @@ import { Checkbox } from '@mui/material';
 
 ////// helpers
 import ConfirmModal from 'common/ConfirmModal/ConfirmModal';
+import { myAlert } from 'helpers/myAlert';
 
 ////// icons
 import DeleteIcon from 'assets/MyIcons/DeleteIcon';
@@ -27,7 +28,6 @@ import { styleCategName, styleCategBox, styleInnerTable, obj52, obj82 } from './
 import './style.scss';
 
 import { crudInvoiceReq, listInvoiceFN } from 'store/reducers/invoiceSlice';
-import { myAlert } from 'helpers/myAlert';
 
 const TableInvoice = (props) => {
   const { item } = props;

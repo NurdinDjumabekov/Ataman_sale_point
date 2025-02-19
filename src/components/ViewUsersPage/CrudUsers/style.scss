@@ -1,0 +1,52 @@
+.crudUsers {
+  width: 400px;
+  padding: 0px 0px 50px 0;
+  > div:first-child {
+    margin: 0;
+  }
+
+  .inputSend {
+    margin: 10px 0 0 0;
+  }
+
+  .saveData {
+    width: 180px;
+    background: #00ab55;
+    height: 38px;
+    padding: 2px 15px 3px;
+    border-radius: 5px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    float: right;
+    margin: 10px 0 0 0;
+  }
+
+  .password {
+    position: relative;
+
+    &__action {
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+
+      .line {
+        width: 2px;
+        height: 20px;
+        border-radius: 5px;
+        background: #000000bf;
+        position: absolute;
+        right: 9px;
+        transform: rotate(45deg);
+        bottom: 0px;
+        z-index: 6;
+        cursor: pointer;
+      }
+    }
+  }
+}

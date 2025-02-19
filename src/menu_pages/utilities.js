@@ -1,6 +1,13 @@
 // assets
 import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons-react';
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
+import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
+import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
+import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
+import FileOpenOutlinedIcon from '@mui/icons-material/FileOpenOutlined';
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
+
 import DownloadInvoicePage from 'views/DownloadInvoicePage/DownloadInvoicePage';
 
 const utilities = {
@@ -13,9 +20,34 @@ const utilities = {
       title: 'Список накладных',
       type: 'item',
       url: '/utils/download-invoice',
-      icon: DownloadOutlinedIcon,
+      icon: InventoryOutlinedIcon,
       breadcrumbs: false
     },
+    {
+      id: 'orders',
+      title: 'Заявки',
+      type: 'item',
+      url: '/utils/orders',
+      icon: NoteAddOutlinedIcon,
+      breadcrumbs: false
+    },
+    {
+      id: 'prods',
+      title: 'Список товаров',
+      type: 'item',
+      url: '/utils/prods',
+      icon: ReceiptLongOutlinedIcon,
+      breadcrumbs: false
+    },
+    {
+      id: 'user',
+      title: 'Пользователи',
+      type: 'item',
+      url: '/users/info',
+      icon: PeopleOutlineOutlinedIcon,
+      breadcrumbs: false
+    },
+
     {
       id: 'util-typography',
       title: 'Typography',

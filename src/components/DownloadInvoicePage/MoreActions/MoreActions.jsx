@@ -22,7 +22,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ConfirmModal from 'common/ConfirmModal/ConfirmModal';
 import { myAlert } from 'helpers/myAlert';
 
-export default function MoreActions() {
+const MoreActions = ({ invoice_type }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [del, setDel] = useState(false);
@@ -37,7 +37,7 @@ export default function MoreActions() {
     const send = { action_type: 1, date: activeDate, check_key };
     setAnchorEl(null);
     const res = await dispatch(crudInvoiceMoreReq(send)).unwrap();
-    if (!!res) dispatch(getInvoiceReq({ date: activeDate }));
+    if (!!res) dispatch(getInvoiceReq({ date: activeDate, invoice_type }));
   };
 
   const delAllInvoiceFN = async () => {
@@ -46,7 +46,7 @@ export default function MoreActions() {
     setDel(false);
     const res = await dispatch(crudInvoiceMoreReq(send)).unwrap();
     if (!!res) {
-      dispatch(getInvoiceReq({ date: activeDate }));
+      dispatch(getInvoiceReq({ date: activeDate, invoice_type }));
       myAlert('Накладные удалены');
     }
   };
@@ -88,7 +88,9 @@ export default function MoreActions() {
       <ConfirmModal state={del} title="Удалить накладные за сегодняшнюю дату?" yesFN={delAllInvoiceFN} noFN={closeModal} />
     </div>
   );
-}
+};
+
+export default MoreActions;
 
 export const StyledMenu = styled((props) => (
   <Menu

@@ -73,6 +73,21 @@ export const crudInvoiceMoreReq = createAsyncThunk('crudInvoiceMoreReq', async f
   }
 });
 
+////// craeteOrderReq - оформить заказ
+export const craeteOrderReq = createAsyncThunk('craeteOrderReq', async function (data, { dispatch, rejectWithValue }) {
+  const url = `${apiUrl}/order/crud`;
+  try {
+    const response = await axiosInstance.post(url, data);
+    if (response.status >= 200 && response.status < 300) {
+      return response?.data;
+    } else {
+      throw Error(`Error: ${response.status}`);
+    }
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
 const invoiceSlice = createSlice({
   name: 'invoiceSlice',
   initialState,

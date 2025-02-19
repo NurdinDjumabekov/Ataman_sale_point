@@ -5,10 +5,14 @@ import storage from 'redux-persist/lib/storage';
 //// slice
 import saveDataSlice from './reducers/saveDataSlice';
 import invoiceSlice from './reducers/invoiceSlice';
+import usersSlice from './reducers/usersSlice';
+import prodsSlice from './reducers/prodsSlice';
 
 const reducer = combineReducers({
   invoiceSlice,
-  saveDataSlice
+  saveDataSlice,
+  usersSlice,
+  prodsSlice
 });
 
 const persistConfig = {

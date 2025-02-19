@@ -1,21 +1,15 @@
-import React from "react";
+import React from 'react';
 
-const EditIcon = ({
-  backgroundColor = "transparent",
-  color = "#222",
-  width = "20",
-  height = "20",
-  ...props
-}) => {
+const EditIcon = ({ backgroundColor = 'transparent', color = '#222', width = '18', height = '18', ...props }) => {
   return (
-    <div style={{ display: "inline-flex", cursor: "pointer" }}>
+    <div style={{ display: 'inline-flex', cursor: 'pointer' }}>
       <svg
         width={width}
         height={height}
         viewBox="0 0 24 24"
         fill={backgroundColor}
         xmlns="http://www.w3.org/2000/svg"
-        class="w-4.5 h-4.5"
+        className="w-4.5 h-4.5"
         {...props}
       >
         <path

@@ -4,6 +4,9 @@ import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import DownloadInvoicePage from 'views/DownloadInvoicePage/DownloadInvoicePage';
+import ViewUsersPage from 'views/ViewUsersPage/ViewUsersPage';
+import OrdersPage from 'views/OrdersPage/OrdersPage';
+import ViewProdsPage from 'views/ViewProdsPage/ViewProdsPage';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -29,6 +32,18 @@ const MainRoutes = {
     {
       path: 'utils',
       children: [{ path: 'download-invoice', element: <DownloadInvoicePage /> }]
+    },
+    {
+      path: 'users',
+      children: [{ path: 'info', element: <ViewUsersPage /> }]
+    },
+    {
+      path: 'utils',
+      children: [{ path: 'prods', element: <ViewProdsPage /> }]
+    },
+    {
+      path: 'utils',
+      children: [{ path: 'orders', element: <OrdersPage /> }]
     },
     {
       path: 'utils',

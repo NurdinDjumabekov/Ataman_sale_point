@@ -23,15 +23,16 @@ a {
 button {
   border: none;
   cursor: pointer;
+  background: transparent;
 }
 
 .dateSort {
   width: 120px;
-  height: 40px;
+  height: 38px;
 
   input {
     width: 120px;
-    height: 40px;
+    height: 38px;
     padding: 0 18px;
     border-radius: 5px;
     font-size: 16px !important;
@@ -47,5 +48,50 @@ button {
     &:focus {
       border: 1px solid #c3ccd8;
     }
+  }
+}
+
+.emptyData {
+  height: 85%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font-size: 20px;
+  }
+}
+
+.myInputs {
+  margin: 10px 0 0 0;
+  position: relative;
+  z-index: 50;
+
+  h5 {
+    font-size: 16px;
+    margin: 0 0 3px 0;
+    padding: 0 !important;
+    font-weight: 400;
+    background: transparent;
+  }
+
+  .css-13cymwt-control,
+  .css-t3ipsp-control {
+    height: 38px !important;
+    cursor: pointer;
+  }
+
+  .css-1dimb5e-singleValue {
+    font-size: 13px !important;
+  }
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0 0 3px 0;
+  > span {
+    padding: 0 !important;
   }
 }

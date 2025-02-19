@@ -14,6 +14,7 @@ import DatePicker from 'react-datepicker';
 import ListInvoice from 'components/DownloadInvoicePage/ListInvoice/ListInvoice';
 import GeneratePdfInvoice from 'components/DownloadInvoicePage/GeneratePdfInvoice/GeneratePdfInvoice';
 import GeneratePdfCheque from 'components/DownloadInvoicePage/GeneratePdfCheque/GeneratePdfCheque';
+import MoreActions from 'components/DownloadInvoicePage/MoreActions/MoreActions';
 
 ////// style
 import './style.scss';
@@ -22,7 +23,6 @@ import './style.scss';
 import { ru } from 'date-fns/locale';
 import { format, parse } from 'date-fns';
 import { myAlert } from 'helpers/myAlert';
-import MoreActions from 'components/DownloadInvoicePage/MoreActions/MoreActions';
 
 const DownloadInvoicePage = () => {
   const fileInputRef = useRef(null);
@@ -41,7 +41,7 @@ const DownloadInvoicePage = () => {
       e.target.value = '';
       if (!!res) {
         myAlert('Накладная добавлена в список');
-        dispatch(getInvoiceReq({ date: format(new Date(), 'yyyy-MM-dd', { locale: ru }) }));
+        dispatch(getInvoiceReq({ date: format(new Date(), 'yyyy-MM-dd', { locale: ru }), invoice_type: 1 }));
         dispatch(activeDateFN(format(new Date(), 'yyyy-MM-dd', { locale: ru })));
       }
     }
@@ -57,7 +57,7 @@ const DownloadInvoicePage = () => {
       e.target.value = '';
       if (!!res) {
         myAlert('Накладная добавлена в список');
-        dispatch(getInvoiceReq({ date: format(new Date(), 'yyyy-MM-dd', { locale: ru }) }));
+        dispatch(getInvoiceReq({ date: format(new Date(), 'yyyy-MM-dd', { locale: ru }), invoice_type: 1 }));
         dispatch(activeDateFN(format(new Date(), 'yyyy-MM-dd', { locale: ru })));
       }
     }
@@ -65,7 +65,7 @@ const DownloadInvoicePage = () => {
 
   const onChangeDate = async (date) => {
     dispatch(activeDateFN(format(date, 'yyyy-MM-dd', { locale: ru })));
-    dispatch(getInvoiceReq({ date: format(date, 'yyyy-MM-dd', { locale: ru }) }));
+    dispatch(getInvoiceReq({ date: format(date, 'yyyy-MM-dd', { locale: ru }), invoice_type: 1 }));
   };
 
   //// чтобы избежать открытия файла в браузере и перезагрузки страницы
@@ -78,7 +78,7 @@ const DownloadInvoicePage = () => {
     return () => dispatch(listInvoiceFN([]));
   }, []);
 
-  const getData = () => dispatch(getInvoiceReq({ date: activeDate }));
+  const getData = () => dispatch(getInvoiceReq({ date: activeDate, invoice_type: 1 }));
 
   const checkListInvoice = listInvoice?.length == 0;
 
@@ -109,7 +109,7 @@ const DownloadInvoicePage = () => {
             <DownloadOutlinedIcon />
             <p>Загрузить файл</p>
           </button>
-          <MoreActions />
+          <MoreActions invoice_type={1} />
         </div>
 
         {!!checkListInvoice ? (

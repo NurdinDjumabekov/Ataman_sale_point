@@ -14,19 +14,26 @@ const pages = {
       icon: IconKey,
 
       children: [
+        // {
+        //   id: 'user',
+        //   title: 'Пользователи',
+        //   type: 'item',
+        //   url: '/users/info',
+        //   target: false
+        // },
         {
           id: 'login3',
           title: 'Login',
           type: 'item',
           url: '/pages/login/login3',
-          target: true
+          target: false
         },
         {
           id: 'register3',
           title: 'Register',
           type: 'item',
           url: '/pages/register/register3',
-          target: true
+          target: false
         }
       ]
     }

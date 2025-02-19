@@ -49,15 +49,22 @@ const MainCard = React.forwardRef(
         }}
       >
         {/* card header and action */}
-        {!darkTitle && title && <CardHeader sx={headerSX} title={title} action={secondary} />}
-        {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />}
+        {!darkTitle && title && <CardHeader sx={headerSX} style={{ position: 'relative' }} title={title} action={secondary} />}
+        {darkTitle && title && (
+          <CardHeader
+            sx={headerSX}
+            style={{ position: 'relative' }}
+            title={<Typography variant="h3">{title}</Typography>}
+            action={secondary}
+          />
+        )}
 
         {/* content & header divider */}
         {title && <Divider />}
 
         {/* card content */}
         {content && (
-          <CardContent sx={contentSX} className={contentClass} >
+          <CardContent sx={contentSX} className={contentClass}>
             {children}
           </CardContent>
         )}
