@@ -1,0 +1,46 @@
+.crudProds {
+  .img-desc {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .inputSend:nth-child(1) {
+      width: calc(100% - 150px);
+      textarea {
+      }
+    }
+
+    .downloadFile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 150px;
+      height: 150px;
+      border: 1px solid #e1e6ed;
+      margin: 25px 0 0 0;
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+
+      .load {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        z-index: 10;
+        background: #ffffffa0;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      img {
+        object-fit: cover;
+        border-radius: 5px;
+      }
+    }
+  }
+}

@@ -44,23 +44,23 @@ const MainRoutes = {
     {
       path: 'utils',
       children: [{ path: 'orders', element: <OrdersPage /> }]
-    },
-    {
-      path: 'utils',
-      children: [{ path: 'util-typography', element: <UtilsTypography /> }]
-    },
-    {
-      path: 'utils',
-      children: [{ path: 'util-color', element: <UtilsColor /> }]
-    },
-    {
-      path: 'utils',
-      children: [{ path: 'util-shadow', element: <UtilsShadow /> }]
-    },
-    {
-      path: 'sample-page',
-      element: <SamplePage />
     }
+    // {
+    //   path: 'utils',
+    //   children: [{ path: 'util-typography', element: <UtilsTypography /> }]
+    // },
+    // {
+    //   path: 'utils',
+    //   children: [{ path: 'util-color', element: <UtilsColor /> }]
+    // },
+    // {
+    //   path: 'utils',
+    //   children: [{ path: 'util-shadow', element: <UtilsShadow /> }]
+    // },
+    // {
+    //   path: 'sample-page',
+    //   element: <SamplePage />
+    // }
   ]
 };
 

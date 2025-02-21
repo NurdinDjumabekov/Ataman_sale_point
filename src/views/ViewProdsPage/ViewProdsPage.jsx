@@ -27,10 +27,9 @@ import CrudProds from 'components/ViewProdsPage/CrudProds';
 import './style.scss';
 
 ////// helpers
-import { ru } from 'date-fns/locale';
-import { format, parse } from 'date-fns';
 import { Checkbox } from '@mui/material';
 import { myAlert } from 'helpers/myAlert';
+const apiUrl = import.meta.env.VITE_API_URL_DOMAIN;
 
 const ViewProdsPage = () => {
   const dispatch = useDispatch();
@@ -38,6 +37,7 @@ const ViewProdsPage = () => {
   const { listProds } = useSelector((state) => state.prodsSlice);
 
   const [crudProd, setCrudProd] = useState({});
+  const [previewImage, setPreviewImage] = React.useState(null);
 
   useEffect(() => {
     getData();
@@ -65,9 +65,15 @@ const ViewProdsPage = () => {
           data={listProds}
           components={VirtuosoTableComponents}
           fixedHeaderContent={fixedHeaderContent}
-          itemContent={(index, row) => rowContent(index, row, setCrudProd, getData, dispatch)}
+          itemContent={(index, row) => rowContent(index, row, setCrudProd, getData, dispatch, setPreviewImage)}
         />
-        <CrudProds crudProd={crudProd} setCrudProd={setCrudProd} getData={getData} />
+        <CrudProds
+          crudProd={crudProd}
+          setCrudProd={setCrudProd}
+          getData={getData}
+          setPreviewImage={setPreviewImage}
+          previewImage={previewImage}
+        />
       </div>
     </MainCard>
   );
@@ -91,9 +97,10 @@ function fixedHeaderContent() {
   );
 }
 
-function rowContent(_index, row, setCrudProd, getData, dispatch) {
+function rowContent(_index, row, setCrudProd, getData, dispatch, setPreviewImage) {
   const pastFN = (item, action_type) => {
     setCrudProd({ ...item, unit: { label: item?.unit_name, value: item?.unit_guid }, action_type });
+    setPreviewImage(`${apiUrl}${item?.path}`);
   };
 
   const crudDataProds = async (row) => {
@@ -104,6 +111,7 @@ function rowContent(_index, row, setCrudProd, getData, dispatch) {
       sale_price: row?.sale_price,
       unit_guid: row?.unit_guid,
       active: row?.active == 1 ? 0 : 1,
+      description: row?.description,
       guid: row?.guid
     };
     const res = await dispatch(crudProdsReq(send)).unwrap();
@@ -112,6 +120,21 @@ function rowContent(_index, row, setCrudProd, getData, dispatch) {
   };
 
   return columns?.map((column) => {
+    if (column?.dataKey == 'codeid') {
+      return <TableCell key={column?.dataKey}>{_index + 1}</TableCell>;
+    }
+    if (column?.dataKey == 'path') {
+      if (!!row?.[column?.dataKey]) {
+        return (
+          <TableCell key={column?.dataKey}>
+            <div className="imgProd">
+              <img src={`${apiUrl}${row?.[column?.dataKey]}`} alt="" />
+            </div>
+          </TableCell>
+        );
+      }
+      return <TableCell key={column?.dataKey}>Отсутствует</TableCell>;
+    }
     if (column?.dataKey == '...') {
       return (
         <TableCell key={column?.dataKey} align={'left'}>
@@ -129,15 +152,8 @@ function rowContent(_index, row, setCrudProd, getData, dispatch) {
         </TableCell>
       );
     }
-    if (column?.dataKey == 'path') {
-      return (
-        <TableCell key={column?.dataKey} align={'left'}>
-          <img src="" alt="" />
-        </TableCell>
-      );
-    }
     return (
-      <TableCell key={column?.dataKey} align={'left'}>
+      <TableCell key={column?.dataKey}>
         {row?.[column?.dataKey]} {column?.dataKey?.includes('price') && 'сом'}
       </TableCell>
     );
@@ -161,6 +177,7 @@ const columns = [
   { width: '18%', label: 'Цена продажи', dataKey: 'sale_price' },
   { width: '15%', label: 'Ед. измерения', dataKey: 'unit_name' },
   { width: '20%', label: 'Картинка', dataKey: 'path' },
+  { width: '15%', label: 'Описание', dataKey: 'description' },
   { width: '15%', label: 'Статус', dataKey: '...' }
 ];
 

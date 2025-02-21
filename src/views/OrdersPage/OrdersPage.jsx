@@ -101,7 +101,7 @@ const OrdersPage = () => {
         ) : (
           <ListInvoice list={listInvoice} />
         )}
-        <button onClick={sendSMS}>asdas</button>
+        {/* <button onClick={sendSMS}>asdas</button> */}
       </div>
     </MainCard>
   );
